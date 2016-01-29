@@ -1,6 +1,6 @@
 def f(x):
     import math
-    return 10*math.e**(math.log(0.5)/5.27 * x)
+    return 400*math.e**(math.log(0.5)/3.66 * x)
 
 
 def radiationExposure(start, stop, step):
@@ -19,4 +19,14 @@ def radiationExposure(start, stop, step):
       between start and stop times.
     '''
     
+    radiationAmount = 0
+    i = start
+    while i < stop:
+        print i
+        radiationAmount+=f(i)*step
+        print radiationAmount
+        i+=step
     
+    return radiationAmount
+    
+print radiationExposure(0, 4, 0.25)

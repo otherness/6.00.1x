@@ -109,16 +109,48 @@ def hangman(secretWord):
 
     Follows the other limitations detailed in the problem write-up.
     '''
-    # FILL IN YOUR CODE HERE...
-
-
-
-
+    
+    print("Welcome to the game, Hangman!")
+    print("I am thinking of a word that is " + str(len(secretWord)) + " letters long.")
+    
+    guessedLetters = []
+    attemptsLeft = 8
+    
+    while (not isWordGuessed(secretWord, guessedLetters)) and attemptsLeft > 0:
+        guessIsSane = False
+        while not guessIsSane:
+            print "-------------"
+            print "You have " + str(attemptsLeft) + " guesses left."
+            print "Available letters: " + getAvailableLetters(guessedLetters)
+            guess = raw_input("Please guess a letter: ")
+            guess = guess.lower()
+            if (len(guess) > 1) or (guess not in string.ascii_lowercase):
+                print "Please provide a single letter."
+            elif guess in guessedLetters:
+                print "Oops! You've already guessed that letter: " + getGuessedWord(secretWord, guessedLetters)
+            else:
+                #len(guess) == 1 and guess not in guessedLetters:
+                guessIsSane = True
+                guessedLetters.append(guess)
+                if guess in secretWord:
+                    print "Good guess: " + getGuessedWord(secretWord, guessedLetters)
+                else:
+                    print "Oops! That letter is not in my word: " + getGuessedWord(secretWord, guessedLetters)
+                    attemptsLeft -= 1
+    
+    if isWordGuessed(secretWord, guessedLetters):
+        print "-------------"
+        print "Congratulations, you won!"
+    if attemptsLeft < 1:
+        print "-------------"
+        print "Sorry, you ran out of guesses. The word was " + secretWord + "."
+                
 
 
 # When you've completed your hangman function, uncomment these two lines
 # and run this file to test! (hint: you might want to pick your own
 # secretWord while you're testing)
 
-# secretWord = chooseWord(wordlist).lower()
-# hangman(secretWord)
+#secretWord = chooseWord(wordlist).lower()
+secretWord = "falcon"
+hangman(secretWord)

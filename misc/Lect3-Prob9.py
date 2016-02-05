@@ -1,4 +1,4 @@
-print ("Please think of a number between 0 and 100!")
+print "Please think of a number between 0 and 100!"
 low = 0
 high = 100
 ans = 0

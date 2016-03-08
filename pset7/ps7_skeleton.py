@@ -178,23 +178,22 @@ class SluggishAdopter(Adopter):
         return float(res)
         
 
-def sort_adoption_center_list(adc_list):
-    sorted_adc_list = []
-    
-    return sorted_adc_list
-
-
 def get_ordered_adoption_center_list(adopter, list_of_adoption_centers):
     """
     The method returns a list of an organized adoption_center such that the scores for each AdoptionCenter to the Adopter will be ordered from highest score to lowest score.
     """
     
-    dict1 = {}
+    list1 = []
+    sorted_list1 = []
    
     for adc in list_of_adoption_centers:
-        dict1[adc] = adopter.get_score(adc)
+        list1.append((adc, adopter.get_score(adc)))
    
-    return sorted(dict1, key=lambda k: (-dict1[k], k.get_name()))
+    list1.sort(key=lambda tup: (-tup[1], tup[0].get_name()))
+    
+    for tup in list1:
+        sorted_list1.append(tup[0])
+    return sorted_list1
 
 
 
@@ -203,12 +202,21 @@ def get_adopters_for_advertisement(adoption_center, list_of_adopters, n):
     The function returns a list of the top n scoring Adopters from list_of_adopters (in numerical order of score)
     """
    
-    dict2 = {}
+    list2 = []
+    sorted_list2 = []
     
     for adopter in list_of_adopters:
-        dict2[adopter] = adopter.get_score(adoption_center)
+        list2.append((adopter, adopter.get_score(adoption_center)))
     
-    return sorted(dict2, key = lambda k: (-dict2[k], k.get_name()))[0:n]
+    list2.sort(key=lambda tup2: (-tup2[1], tup2[0].get_name()))
+    
+    i = 0
+    for tup in list2:
+        sorted_list2.append(tup[0])
+        i+=1
+        if i >= n:
+            break
+    return sorted_list2
     
 
 adopter = MedicatedAllergicAdopter("One", "Cat", ['Dog', 'Horse'], {"Dog": .5, "Horse": 0.2})
